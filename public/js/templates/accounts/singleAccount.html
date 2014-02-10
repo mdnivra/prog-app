@@ -1,0 +1,23 @@
+<div class="media account media-border">
+    <span class="social-icon social-icon-small <%= network_type %>"></span>
+    <a class="media-thumb media-thumb-large pull-left" href="#"><img class="media-thumb-img media-thumb-img-large" src="<%= thumbnail %>"></a>
+    <div class="media-body">
+      <h3 class="media-title"><%= title %></h3>
+      <p>
+        <small class="muted">
+          <% if (state) { %> <%= state %> <% } %> 
+          <% if (country) { %> <%= country %> <% } %>
+          <% if(! (state && country)) { %> &nbsp; <% } %>
+        </small>
+      </p>
+      <div class="media-option btn-group shaded-icon" data-object-id="<%= object_id %>">
+        <button class="prog-tooltip" data-toggle="tooltip" data-placement="bottom" data-original-title="Insights"><i class="glyphicon glyphicon-stats"></i></button>
+        <% if(network_type === "Facebook") { %>
+          <button class="prog-tooltip" data-action="addPageTabs" data-toggle="tooltip" data-placement="bottom" data-original-title="Add Apps"><i class="glyphicon glyphicon-th"></i></button>
+        <% } else { %>
+          <button class="prog-tooltip" data-toggle="tooltip" data-placement="bottom" data-original-title="Edit"><i class="glyphicon glyphicon-edit"></i></button>
+        <% } %>
+        <button class="prog-tooltip" data-toggle="tooltip" data-placement="bottom" data-original-title="Insights"><i class="glyphicon glyphicon-stats"></i></button>
+      </div>
+    </div>
+</div>

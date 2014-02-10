@@ -1,0 +1,19 @@
+{
+    "name": "twitteroauth",
+    "type": "library",
+    "description": "Doing interesting things with closures like serialization.",
+    "keywords": ["closure", "serialize", "serializable", "function", "parser", "tokenizer"],
+    "homepage": "https://github.com/jeremeamia/super_closure",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": ""
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+    },
+    "autoload": {
+        "psr-0": { "twitteroauth": "/twitteroauth" }
+    }
+}
