@@ -7,7 +7,7 @@
 	<div class="added-tabs">
 		<h5>Added Tabs</h5>
 		<div class="row">
-			<div class="<%= cssClasses['COLUMN-12'] %>">
+			
 				<% 	addedTabs.each(function (tab) { %>
 					<div class="<%= cssClasses['COLUMN-4'] %> pull-left app-block">
 						<div class="media media-list media-border">
@@ -19,7 +19,7 @@
 						</div>
 					</div>
 				<% }) %>	
-			</div>
+			
 		</div>
 	</div>
 <% } %>
@@ -28,22 +28,19 @@
 	<div class="tabs-selection">
 		<h5>Select tabs to add</h5>
 		<div class="row">
-			<div class="<%= cssClasses['COLUMN-12'] %>">
-				<% _.each(tabs, function (tab) { %>
-					<% var application = tab.application; %>
-					<% if( addedTabs.where({'app_id': application.id}).length === 0 ) { %>
-						<div class="<%= cssClasses['COLUMN-4'] %> pull-left">
-							<div class="media media-list media-border cursor-pointer prog-tooltip" data-action="selectTab" data-appId="<%=application.id%>" data-toggle="tooltip" data-placement="bottom" data-original-title="<%=messages.clickToSelect %>">
-								<a class="media-thumb media-thumb-small pull-left" href="javascript:void(0)"><img class="media-thumb-img media-thumb-img-small" src="<%=tab.image_url%>"></a>
-								<div class="media-body">
-									<h3 class="media-title"><%=application.name%></h3>
-									<p><small> <% if(application.namespace) { %> <%=application.namespace%> <% } else { %> &nbsp; <% } %></small></p>
-								</div>
+			<% _.each(tabs, function (tab) { %>
+				<% var application = tab.application; %>
+				<% if( addedTabs.where({'app_id': application.id}).length === 0 ) { %>
+					<div class="<%= cssClasses['COLUMN-4'] %> pull-left">
+						<div class="media media-list media-border cursor-pointer prog-tooltip" data-action="selectTab" data-appId="<%=application.id%>" data-toggle="tooltip" data-placement="bottom" data-original-title="<%=messages.clickToSelect %>">
+							<a class="media-thumb media-thumb-small pull-left" href="javascript:void(0)"><img class="media-thumb-img media-thumb-img-small" src="<%=tab.image_url%>"></a>
+							<div class="media-body">
+								<h3 class="media-title"><%=application.name%></h3>
 							</div>
 						</div>
-					<% } %>
-				<% }) %>
-			</div>
+					</div>
+				<% } %>
+			<% }) %>
 		</div>
 	</div>
 	<div class="add-secret display-none"></div>

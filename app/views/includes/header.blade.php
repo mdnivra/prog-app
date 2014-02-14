@@ -5,7 +5,7 @@
 			<ul class="nav navbar-nav header-navbar navbar-right">
 				<li class="dropdown">
 					<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
-						<i class="glyphicon glyphicon-user"></i> Welcome Admin <b class="caret"></b>
+						<i class="glyphicon glyphicon-user"></i> Admin <b class="caret"></b>
 					</a>
 					<ul class="dropdown-menu">
 						<li><a href="#"><i class="glyphicon glyphicon-wrench"></i> Settings</a></li>
@@ -24,13 +24,13 @@
 
 			<ul class="nav navbar-nav header-navbar navbar-left">
 				<li class="dropdown active">
-					<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+					<a href="javascript:void(0)">
 						<i class="glyphicon glyphicon-home"></i> Home
 					</a>
 				</li>
 
 				<li class="dropdown">
-					<a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+					<a href="javascript:void(0)">
 						<i class="glyphicon glyphicon-stats"></i> Insights
 					</a>
 				</li>
