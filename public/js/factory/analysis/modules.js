@@ -10,7 +10,7 @@
 			},
 
 			TWITTER_COMPETITOR_ANALYSIS: {
-				availableVisualization: [viz.BAR, viz.COLUMN, viz.PIE]
+				availableVisualization: [viz.LINE, viz.COLUMN, viz.PIE]
 			},
 		}
 	});

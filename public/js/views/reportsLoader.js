@@ -6,7 +6,8 @@
 		'utils',
 		'controllers/analysis/reportController',
 		'views/baseView',
-	], function (libs, utils, ReportController, BaseView) {
+		'views/analysis/reportsSidebar'
+	], function (libs, utils, ReportController, BaseView, ReportsSidebar) {
 
 		var Notification = utils.Notification;
 
@@ -19,11 +20,17 @@
             },
 
             render: function () {
-                var that = this;
+                var that = this,
+                	reportsWorkspace,
+                	reportsSidebar;
                         
                 Notification.info('Loading');
 
-               new ReportController();
+               that.reportsWorkspace = reportsWorkspace = new ReportController();
+               reportsWorkspace.render();
+
+               reportsSidebar = new ReportsSidebar();
+               reportsSidebar.render();
             }
 		});
 

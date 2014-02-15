@@ -3,8 +3,9 @@
 
 	define([
 		'factory/analysis/visualizations',
-		'views/charts/barChart'
-	], function (vis, BarChartView) {
+		'views/charts/barChart',
+		'views/charts/lineChart'
+	], function (vis, BarChartView, LineChartView) {
 	
 		return {
 			getChartView: function (visualization) {
@@ -16,6 +17,10 @@
 				switch(visualization) {
 					case vis.BAR:
 						chartView = BarChartView;
+						break;
+
+					case vis.LINE:
+						chartView = LineChartView;
 						break;
 				}
 

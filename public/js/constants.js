@@ -3,9 +3,11 @@
 
 	define([], function () {
 		return {
-			modalSelector: '#my-modal',
-			contentBodySelector: '.content-wrapper',
-			sidebarLayoutContentBodySelector: '.content-block'
+			modalSelector: 						'#my-modal',
+			modalContentSelector: 				'.modal-content',
+			sidebarSelector: 					'.side-nav',
+			contentBodySelector: 				'.content-wrapper',
+			sidebarLayoutContentBodySelector: 	'.content-block',
 		};
 	});
 })();

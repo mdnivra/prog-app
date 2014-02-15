@@ -1,7 +1,7 @@
 require.config({
 	paths : {
 		jquery : 'libs/jquery',
-		underscore : 'libs/underscore',
+		underscore : 'libs/lodash',
 		backbone : 'libs/backbone',
 		bootstrap : '../bootstrap/js/bootstrap',
 		vent: 'utils/vent',

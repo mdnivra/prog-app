@@ -5,7 +5,8 @@
 		return {
 			BAR: 	'BAR',
 			COLUMN: 'COLUMN',
-			PIE: 	'PIE'
+			PIE: 	'PIE',
+			LINE:   'LINE'
 		}
 	});
 })();

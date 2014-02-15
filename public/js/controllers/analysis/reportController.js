@@ -33,7 +33,6 @@
 
 				BaseView.prototype.initialize.call(that, options);
 				that.moduleViews = [];
-				that.render();
 			},
 
 			render: function () {
@@ -58,10 +57,6 @@
 				});
 				
 				that.$el.html(jModules);
-
-
-				// TODO: remove this hack, trigger resize to render charts properly...	
-				$(window).trigger('resize');
 
 				return that;	
 			}

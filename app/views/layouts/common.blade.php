@@ -18,7 +18,13 @@
 
             @include('includes.header')
             
-            @yield('sidebar')
+            <div id="sidebar">
+                <div class="inner">
+                    <nav class="side-nav">
+                        @yield('sidebar')  
+                    </nav>
+                </div>
+            </div>
 
             <div id="middle">
                 <div id="main-content" data-component="<?=$data['component']?>">

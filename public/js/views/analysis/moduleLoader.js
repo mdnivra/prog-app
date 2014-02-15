@@ -4,13 +4,16 @@
 	define([
 		'libs',
 		'utils',
+		'models/analysis/moduleData',
 		'views/baseView',
 		'factory/analysis/modules',
 		'factory/analysis/chartViews',
+		'parser/dataParser',
 		'text!templates/analysis/module.html'
-	], function (libs, utils, BaseView, modulesFactory, chartViewsFactory, moduleTemplate) {
+	], function (libs, utils, ModuleDataModel, BaseView, modulesFactory, chartViewsFactory, dataParser, moduleTemplate) {
 
-		var _ = libs.underscore,
+		var $ = libs.jquery,
+			_ = libs.underscore,
 			ModuleLoader;
 
 		ModuleLoader = BaseView.extend({
@@ -23,6 +26,8 @@
 
 			initialize: function (options) {
 				var that = this;
+
+				that.deferred = new $.Deferred();
 
 				BaseView.prototype.initialize.call(that, options);
 			},
@@ -40,10 +45,32 @@
 					heading: moduleDetails.title,
 				}));
 				
-
-				that.$('.rm-chart').html(new chartView().render().el);
+				that.getData();
+				$.when(that.deferred).done(function (data) {
+					
+					that.$('.rm-chart').html(new chartView().render().el);
+					
+					// TODO: remove this hack, trigger resize to render charts properly...	
+					$(window).trigger('resize');
+				});
 				
 				return that;
+			},
+
+			getData: function () {
+				var that = this,
+					deferred = that.deferred,
+					dataModel = new ModuleDataModel();
+
+				dataModel.fetch({
+					success: function (data) {
+						return deferred.resolve(dataParser.parseData(data.toJSON()));
+					},
+
+					error: function () {
+						return deferred.resolve({error: 'Error'});	
+					}
+				});	
 			}
 		});
 

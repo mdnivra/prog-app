@@ -46,7 +46,7 @@
 
 		modalView = Backbone.View.extend({
 
-			el: '.modal-content',
+			el: constants.modalContentSelector,
 
 			initialize: function (options) {
 				var that = this; 
