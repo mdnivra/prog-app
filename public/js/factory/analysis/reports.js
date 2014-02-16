@@ -17,7 +17,19 @@
 						key: 	'TWITTER_COMPETITOR_ANALYSIS',
 						title: 	'Twitter Competitors',
 						width: 	'HALF_WIDTH'
-					},
+					}
+				]
+			},
+
+			{
+				title: 'Temp Analysis',
+				key: 'TEMP_ANALYSIS',
+				modules : [
+					{
+						key: 	'FACEBOOK_COMPETITOR_ANALYSIS',
+						title: 	'Facebook Competitors',
+						width: 	'HALF_WIDTH'
+					}
 				]
 			}
 		];

@@ -47,11 +47,7 @@
 				
 				that.getData();
 				$.when(that.deferred).done(function (data) {
-					
-					that.$('.rm-chart').html(new chartView().render().el);
-					
-					// TODO: remove this hack, trigger resize to render charts properly...	
-					$(window).trigger('resize');
+					that.$('.rm-chart').html(new chartView({width: that.$el.width()}).render().el);
 				});
 				
 				return that;

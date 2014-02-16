@@ -3,14 +3,17 @@
 
 	define([
 		'libs',
+		'utils',
 		'views/baseView',
 		'views/analysis/moduleLoader',
 		'factory/analysis/reports',
 		'constants'
-	], function (libs, BaseView, ModuleLoader, reportsFactory, constants) {
+	], function (libs, utils, BaseView, ModuleLoader, reportsFactory, constants) {
 
 		var _ = libs.underscore,
 			$ = libs.jquery,
+			Notification = utils.Notification,
+			Vent = utils.Vent,
 			ReportController,
 
 		getModules = function (reportType, reportsFactory) {
@@ -22,6 +25,12 @@
 			return (_.filter(reportsFactory, function (report) {
 				return report.key === reportType;
 			})[0] || {}).modules;
+		},
+
+		showReport = function () {
+			var that = this;
+
+			that.render();
 		};
  
 		ReportController = BaseView.extend({
@@ -32,6 +41,7 @@
 				var that = this;
 
 				BaseView.prototype.initialize.call(that, options);
+				that.listenTo(Vent, 'analysis:showReport', showReport);
 				that.moduleViews = [];
 			},
 
@@ -57,6 +67,8 @@
 				});
 				
 				that.$el.html(jModules);
+
+				Notification.hide();
 
 				return that;	
 			}

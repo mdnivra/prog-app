@@ -1,6 +1,6 @@
 <ul class="nav nav-pills nav-stacked">
 	<% _.forEach(reports, function (report, i) { %>
-		<li class="sidebar-list-item <% if(i===0) { %> active <% } %> ">
+		<li class="sidebar-list-item <% if(i===0) { %> active <% } %> " data-report="<%= report.key %>" data-action="showReport">
 			<a href="javascript:void(0)" class="sidebar-list-item-link"><%= report.title %></a>
 		</li>
 	<% }) %>

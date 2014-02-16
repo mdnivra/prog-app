@@ -6,7 +6,7 @@
     <title>Progknows</title>
     <head>
         {{ HTML::style('/bootstrap/css/bootstrap.min.css') }}
-        {{ HTML::style('/css/new-style.css') }}
+        {{ HTML::style('/css/style.css') }}
     	@yield('styleAndScript')
 	</head>
 	<body>

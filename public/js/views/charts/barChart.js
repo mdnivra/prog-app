@@ -4,17 +4,18 @@
 	define([
 		'libs',
 		'utils',
-		'views/baseView',
+		'views/baseChartView',
 		'views/charts/highchartsParams',
 		'highcharts'
-	], function (libs, utils, BaseView, chartDefaultParams) {
+	], function (libs, utils, BaseChartView, chartDefaultParams) {
 
 		var BarChartView;
 
-		BarChartView = BaseView.extend({
+		BarChartView = BaseChartView.extend({
 
 			render: function () {
-				var that = this;
+				var that = this,
+					options = that.options;
 
 				var data = {
 			            xAxis: {
@@ -37,7 +38,8 @@
 			   
 				that.$el.highcharts(_.merge({
 						chart: {
-			                type: 'bar'
+			                type: 'bar',
+			                width: options.width
 			            }
 		        	},
 					chartDefaultParams, data)
