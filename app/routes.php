@@ -21,8 +21,6 @@ Route::group(array('before' => 'auth'), function()
 	Route::any('/twittercallback','TwitterOauthController@callback');
 	Route::any('/twitterusername','TwitterController@checkUsername');
 
-	Route::controller('socialapps','SocialAppsController');
-	Route::controller('competitorInsights','CompetitorInsightsController');
 	Route::controller('analysis','ReportsController');
 
 });

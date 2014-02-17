@@ -13,7 +13,7 @@ class ProgknowsController extends BaseController {
 
 	public function home() {
 		$data = array(
-			'component' => 'accountsLoader'
+			'component' => 'settingsLoader'
 		);
 		return View::make('progknows.home')->with('data',$data);
 	}
