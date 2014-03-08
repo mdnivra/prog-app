@@ -9,9 +9,9 @@ class Job_TwitterJobController extends BaseController {
 
 
 
-	private function getHandlerInfo($screenname,$user_id,$settings){
+	private function getHandlerInfo($user_id,$settings){
 		$url = 'https://api.twitter.com/1.1/users/show.json';
-        $getfield = '?user_id='.$user_id.'&screen_name='.$screenname;
+        $getfield = '?user_id='.$user_id;
         $requestMethod = 'GET';
         $twitter = new TwitterAPIExchange($settings);
         $response =$twitter->setGetfield($getfield)
@@ -42,6 +42,7 @@ class Job_TwitterJobController extends BaseController {
 
 
     public function TwitterInsights(){
+
     	$settings = array(
 		    'oauth_access_token' => OAUTH_ACCESS_TOKEN,
 		    'oauth_access_token_secret' => OAUTH_ACCESS_TOKEN_SECRET,
@@ -50,18 +51,25 @@ class Job_TwitterJobController extends BaseController {
 		);
 
     	$twitterAccounts =  Job::getTwitterAccounts();
+		$this->setTwitterAccountsInsights($settings,'social_accounts', $twitterAccounts);
+
+
+		//get insights of competetor analysis result
+    	$twitterAccounts =  Job::getTwitterCompAccounts();
+		$this->setTwitterAccountsInsights($settings, 'competitive_analysis_config', $twitterAccounts);
+    }
+    
+
+    private function setTwitterAccountsInsights($settings,$table, $twitterAccounts){	
+    	
 
     	foreach ($twitterAccounts as $twitterAccount) {
-			$jobData = $this->GetHandlerInfo($twitterAccount['username'],
+			$jobData = $this->GetHandlerInfo(
 					$twitterAccount['object_id'],$settings);
-			$socialAccountJob  =  SocialAccountJob::where('social_account_id'
-								 ,$twitterAccount->id)->first();
-
-			if (!$socialAccountJob){
-				$socialAccountJob = new SocialAccountJob();
-				$socialAccountJob->social_account_id = $twitterAccount->id;
-
-			}
+	
+		 	$socialAccountJob = new AccountJob();
+			$socialAccountJob->account_id = $twitterAccount->id;
+			$socialAccountJob->table = $table;
 					
 			$socialAccountJob->data  = $jobData;
 			$socialAccountJob->save();

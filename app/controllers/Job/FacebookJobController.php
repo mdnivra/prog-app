@@ -70,9 +70,9 @@ class Job_FacebookJobController extends BaseController {
 		$period = 'lifetime';
 		
 
-		// $this->saveBasicMetrics($facebookPages, 'fan_count,talking_about_count', 'lifetime');
+		$this->saveBasicMetrics($facebookPages, 'fan_count,talking_about_count', 'lifetime');
 		
-		$this->getMetrics($facebookPages, 'page_engaged_users', 'day');
+		//$this->getMetrics($facebookPages, 'page_engaged_users', 'day');
 
 		return Response::json(array(
 			        'error' => true,
@@ -86,8 +86,15 @@ class Job_FacebookJobController extends BaseController {
 		foreach ($facebookPages as $facebookPage) {
 			$pagesArray[] = $facebookPage->object_id;
 		}
-		$fql = "SELECT ".$metrics.",page_id FROM insights  
-			WHERE page_id IN ('".implode("','",$pagesArray)."')";
+		$fql = "SELECT metric FROM insights  
+			WHERE metric = $metrics";  
+
+		$fql = "SELECT metric,value FROM insights
+		 WHERE metric IN $metrics 
+		 AND period=period('$period') AND object_id='$facebookPages[0]' 
+
+		 AND end_time = end_time_date('$end_date')";
+
 		$graph = new FacebookGraph(array('AppId' =>$this->appId,
 			'AppSecret' =>$this->appSecret));
 		$insights = $graph->FqlQuery($fql);
@@ -107,8 +114,9 @@ class Job_FacebookJobController extends BaseController {
 				'id' => $facebookPages[$key]['id'],
 				'end_date' => $end_date
 			);
-			$socialAccountJob  = new SocialAccountJob();
-			$socialAccountJob->social_account_id = $facebookPages[$key]['id'];
+			$socialAccountJob  = new AccountJob();
+			$socialAccountJob->account_id = $facebookPages[$key]['id'];
+			$socialAccountJob->table = 'social_accounts';
 			$socialAccountJob->data  = json_encode($insightsData, true);
 			$socialAccountJob->save();
 		}
@@ -139,7 +147,7 @@ class Job_FacebookJobController extends BaseController {
 				'id' => $facebookPages[$key]['id'],
 				'end_date' => $end_date
 			);
-			$socialAccountJob  = new SocialAccountJob();
+			$socialAccountJob  = new AccountJob();
 			$socialAccountJob->social_account_id = $facebookPages[$key]['id'];
 			$socialAccountJob->data  = json_encode($insightsData, true);
 			$socialAccountJob->save();

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSocialAccountJobTable extends Migration {
+class CrateAccountJobsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -10,14 +10,20 @@ class CreateSocialAccountJobTable extends Migration {
 	 * @return void
 	 */
 	public function up()
-	{	
+	{
 		if (Schema::hasTable('social_account_jobs')){
     		Schema::drop('social_account_jobs');
 		}
-		Schema::create('social_account_jobs',function($table)
+
+		if (Schema::hasTable('account_jobs')){
+    		Schema::drop('account_jobs');
+		}
+	
+		Schema::create('account_jobs',function($table)
 		{
 			$table->increments('id');
-			$table->integer('social_account_id');
+			$table->integer('account_id');
+			$table->string('table');
 			$table->longText('data');
 			$table->timestamps();
 		});
@@ -30,7 +36,7 @@ class CreateSocialAccountJobTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('social_account_jobs');
+		Schema::drop('account_jobs');
 	}
 
 }

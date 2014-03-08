@@ -2,7 +2,7 @@
  
 class Job extends Eloquent {
  
-    protected $table = 'social_account_jobs'; 
+    protected $table = 'account_jobs'; 
  
  	public static function ExpriredAccessToken(){
  		$data =SocialAccount::where('network_type','facebook')
@@ -32,6 +32,13 @@ class Job extends Eloquent {
     	$data =SocialAccount::where('network_type','twitter')
  			->get(array('id', 'object_id', 'username'));
  		return $data;
+
+    }
+
+    public static function getTwitterCompAccounts(){
+        $data =CompetitiveAnalysisConfig::where('network_type','twitter')
+            ->get(array('id', 'object_id'));
+        return $data;
 
     }
 
