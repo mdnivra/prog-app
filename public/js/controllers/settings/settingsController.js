@@ -22,7 +22,7 @@
 
             that.jSidebarItems.removeClass('active');
             jEl.addClass('active');
-            console.log(jEl);
+            
             switch (jEl.attr('data-action')) {
                 case 'loadSocialApps':
                    	new SocialAppsLoader();

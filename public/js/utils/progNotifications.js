@@ -9,16 +9,20 @@
 			jAlertBlock = jNotificationBlock.find('.alert'),
 			timeout, 
 
-			showNotification = function (newClass, message) {
+			showNotification = function (newClass, message, hide) {
 				clearTimeout(timeout);
 				jNotificationBlock.show();
 				jAlertBlock.attr('class','alert ' + newClass);
 				jAlertBlock.text(message);
-				timeout = setTimeout(function() { hideNotification.call(this) }, 3000);
+				
+				if(hide) {
+					timeout = setTimeout(function() { hideNotification.call(this) }, 3000);
+				}
 			},
 
 			hideNotification = function () {
 				jNotificationBlock.hide();
+				clearTimeout(timeout);
 			},
 
 			ProgNotifications = {
@@ -27,11 +31,11 @@
 				},
 
 				error: function (message) {
-					showNotification.call(this, 'alert-error', message);
+					showNotification.call(this, 'alert-error', message, true);
 				},
 
 				success: function (message) {
-					showNotification.call(this, 'alert-success', message);
+					showNotification.call(this, 'alert-success', message, true);
 				},
 
 				hide: function () {
