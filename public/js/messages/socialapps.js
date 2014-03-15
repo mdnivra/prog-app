@@ -17,8 +17,10 @@
 			deletingApp: 			'Deleting app',
 			errorInDeleting: 		'Error in deleting app',
 			appDeleted: 			'App deleted successfully',
-			addApp: 				'Add Facebook App'
-	  	};
+			addApp: 				'Add Facebook App',
+			appIdMissing: 			'App Id cannot be blank',
+			secretMissing: 			'App secret cannot be blank'
+ 	  	};
 	});
 
 })();

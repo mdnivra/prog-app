@@ -3,22 +3,23 @@
 	<h4 id="my-modal-label">Add Facebook App(s)</h4>
 </div>
 <div class="modal-body">
+	<div class="alert alert-danger hide"></div>
 <% if(addedTabs.length > 0 ) { %>
 	<div class="added-tabs">
 		<h5>Added Tabs</h5>
 		<div class="row">
 			
-				<% 	addedTabs.each(function (tab) { %>
-					<div class="<%= cssClasses['COLUMN-4'] %> pull-left app-block">
-						<div class="media media-list media-border">
-							<a href="javascript:void(0)" data-appId="<%=tab.get('app_id')%>" data-action="removeTab" class="media-action-icon" data-toggle="tooltip" data-placement="left" data-original-title="Delete App"><i class="icon-remove"></i></a>
-							<a class="media-thumb media-thumb-small pull-left" href="javascript:void(0)"><img class="media-thumb-img media-thumb-img-small" src="<%=tab.get('thumbnail')%>"></a>
-							<div class="media-body">
-								<h3 class="media-title"><%=tab.get('title')%></h3>
-							</div>
+			<% 	addedTabs.each(function (tab) { %>
+				<div class="<%= cssClasses['COLUMN-4'] %> pull-left app-block">
+					<div class="media media-list media-border">
+						<a href="javascript:void(0)" data-appId="<%=tab.get('app_id')%>" data-action="removeTab" class="media-action-icon" data-toggle="tooltip" data-placement="left" data-original-title="Delete App"><i class="icon-remove"></i></a>
+						<a class="media-thumb media-thumb-small pull-left" href="javascript:void(0)"><img class="media-thumb-img media-thumb-img-small" src="<%=tab.get('thumbnail')%>"></a>
+						<div class="media-body">
+							<h3 class="media-title"><%=tab.get('title')%></h3>
 						</div>
 					</div>
-				<% }) %>	
+				</div>
+			<% }) %>	
 			
 		</div>
 	</div>

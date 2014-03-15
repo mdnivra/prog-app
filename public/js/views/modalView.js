@@ -14,7 +14,6 @@
 
 		removeView = function () {
 			var that = this;
-			console.log("removing view");
 			
 			this.$el.data('modal', null);
 			if(that.hasTooltip) {

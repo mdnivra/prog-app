@@ -38,15 +38,14 @@ h4, h5, h6 {
 .muted {
   color: @black9;
 }
-a {
+a,
+a:visited {
   color: @themeBlue;
 }
 a:hover {
   color: #2a6496;
 }
-a:visited {
-  color: #a6670d;
-}
+
 .form-horizontal {
   padding: 20px 0;
 }
@@ -310,6 +309,9 @@ body {
 .sidebar-list-item-link:hover {
   background-color: rgba(255, 255, 255, 0.1) !important;
   color: @fontColor;
+}
+.sidebar-list-item-link:visited {
+  color: @fontColor; 
 }
 .sidebar-list-item-link .glypicon {
   padding-right: 15px;
@@ -599,7 +601,7 @@ footer {
 
 .prog-notification {
   top: 5px;
-  z-index: 99999;
+  z-index: 9999999999;
 }
 
 .prog-notification .alert {
@@ -743,4 +745,8 @@ footer {
 
 .sidebar-list-item-link .glyphicon {
   right: 5px;
+}
+
+.alert {
+  padding: 5px 10px;
 }

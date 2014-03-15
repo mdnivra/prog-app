@@ -60,14 +60,16 @@
 			that.jTabsSelection.toggle();
 			that.jAddedTabs.toggle();
 			that.jAddSecret.toggle();
+			that.jMessage.addClass('hide');
 		},
 
 		showAddSecretView = function () {
 			var that = this,
-				selectedTabsDetails = [];
+				selectedTabsDetails = [],
+				jMessage = that.jMessage;
 
 			if(that.selectedTabs.length === 0) {
-				Notification.error(messages.noAppSelected);
+				jMessage.text(messages.noAppSelected).removeClass('hide');
 				return;
 			}
 			_.each(that.selectedTabs, function (id) {
@@ -111,10 +113,17 @@
 
 		saveTabs = function () {
 			var that = this,
+				jMessage = that.jMessage,
 				socialAppModel,
 				appDetails,
 				appSecret;
 
+			if(that.$('.pt-secret').filter(function() { return this.value == ""; }).length > 0) {
+				jMessage.text(messages.secretMissing).removeClass('hide');
+				return;
+			}
+
+			jMessage.addClass('hide');
 			that.jSaveBtn.button('loading');
 
 			_.each(that.selectedTabs, function (id) {
@@ -241,6 +250,7 @@
 			that.jAddedTabs = $el.find('.added-tabs');
 			that.jTabsSelection = $el.find('.tabs-selection');
 			that.jAddSecret = $el.find('.add-secret');
+			that.jMessage = $el.find('.alert');
 			Notification.hide();
 		},
 

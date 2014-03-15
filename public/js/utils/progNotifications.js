@@ -31,7 +31,7 @@
 				},
 
 				error: function (message) {
-					showNotification.call(this, 'alert-error', message, true);
+					showNotification.call(this, 'alert-danger', message, true);
 				},
 
 				success: function (message) {

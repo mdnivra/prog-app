@@ -18,8 +18,9 @@
 			postRender = function () {
 				var that = this;
 
-				that.jSaveButton = that.$el.find('.save-btn');
+				that.jSaveButton = that.$('.save-btn');
 				that.jSaveButton.button();
+				that.jMessage = that.$('.alert');
 			},
 
 			handleAction = function (e) {
@@ -82,17 +83,41 @@
 
 			addSocialApp = function () {
 				var that = this,
-					appId = that.$('#app_id').val();
+					appId = that.$('#app_id').val(),
+					appSecret = that.$('#app_secret').val();
+
+				if(!validateData.call(that, appId, appSecret)) {
+					that.jSaveButton.button('reset');
+					return;
+				}
 
 				that.formData = {
 					appId: appId,
-					appSecret: that.$('#app_secret').val()
+					appSecret: appSecret
 				};	
 
 				$.when(fetchAppDetails.call(that,appId)).then(saveSocialApp, function () {
 					Notification.error(messages.errorFetchingDetails);
 					that.jSaveButton.button('reset');
 				});
+			},
+
+			validateData = function (appId, appSecret) {
+				var that = this,
+					jMessage = that.jMessage;
+
+				if(appId === "" ) {
+					jMessage.text(messages.appIdMissing).removeClass('hide');
+					return false;
+				}
+
+				if(appSecret === "") {
+					jMessage.text(messages.secretMissing).removeClass('hide');
+					return false;	
+				}
+
+				jMessage.addClass('hide');
+				return true;
 			},
 
 			fetchAppDetails = function (appId) {
