@@ -6,35 +6,38 @@
 		'utils',
 		'views/baseView',
 		'factory/analysis/reports',
+        'routers/reportsRouter',
 		'text!templates/analysis/reportsSidebarTemplate.html',
 		'constants'
-	], function (libs, utils, BaseView, reportsFactory, reportsSidebarTemplate, constants) {
+	], function (libs, utils, BaseView, reportsFactory, ReportsRouter, reportsSidebarTemplate, constants) {
 
-		var _ = libs.underscore,
+		var Backbone = libs.backbone,
+            _ = libs.underscore,
             $ = libs.jquery,
             Notification = utils.Notification,
             Vent = utils.Vent,
             reportsSidebarView,
 
-        handleAction = function (e) {
-            var that = this,
-                jEl = $(e.currentTarget);
+        initRouter = function () {
+            var that = this;
+            
+            that.listenTo(Vent, 'analysis:makeLinkActive', makeLinkActive);
 
-
-            switch (jEl.attr('data-action')) {
-                case 'showReport':
-                    showReport.call(that, jEl);
-                    break;
-            }
+            new ReportsRouter;
+            Backbone.history.start();
         },
 
-        showReport = function (jEl) {
-            var that = this;
+        makeLinkActive = function (reportType) {
+            var that = this,
+                jEl;
 
-            that.jSidebarItems.removeClass('active');
-            jEl.addClass('active');
-            $(constants.contentBodySelector).attr('data-report', jEl.attr('data-report'));
-            Vent.trigger('analysis:showReport');
+            if(reportType) {
+                jEl = that.$('[data-report="' + reportType + '"]'); 
+
+                that.jSidebarItems.removeClass('active');
+                jEl.addClass('active');
+            }
+
         };
 
         reportsSidebarView = BaseView.extend({
@@ -43,14 +46,11 @@
 
         	template: _.template(reportsSidebarTemplate),
 
-            events: {
-                'click [data-action]': handleAction
-            },
-
         	initialize: function () {
         		var that = this;
 
         		BaseView.prototype.initialize.call(that);
+                
         	},
 
         	render: function () {
@@ -61,6 +61,9 @@
         		}));
 
                 that.jSidebarItems = that.$('.sidebar-list-item');
+
+                Vent.trigger('analysis:sidebarLoaded');
+                initRouter.call(that);
         		return that;
         	}
         });

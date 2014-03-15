@@ -16,21 +16,16 @@
 			Vent = utils.Vent,
 			ReportController,
 
-		getModules = function (reportType, reportsFactory) {
-
-			_.filter(reportsFactory, function (report) {
-				return report.key === reportType;
-			});
-
+		getModules = function (reportType) {
 			return (_.filter(reportsFactory, function (report) {
 				return report.key === reportType;
 			})[0] || {}).modules;
 		},
 
-		showReport = function () {
+		showReport = function (reportType) {
 			var that = this;
 
-			that.render();
+			that.render(reportType);
 		};
  
 		ReportController = BaseView.extend({
@@ -45,19 +40,16 @@
 				that.moduleViews = [];
 			},
 
-			render: function () {
+			render: function (reportType) {
 				var that = this,
 					jEl = that.$el,
-					reportType, modules, jModules = document.createDocumentFragment();
+					modules, jModules = document.createDocumentFragment();
 
-				if(jEl.attr('data-report')) {
-					reportType = jEl.attr('data-report');
-				} else {
-					reportType = reportsFactory[0].key;
-					jEl.attr('data-report', reportType);
+				if(!reportType) {
+					reportType = (reportsFactory[0] || {}).key;
 				}
-
-				modules = getModules.call(that, reportType, reportsFactory);
+				
+				modules = getModules.call(that, reportType);
 
 				_.forEach(modules , function (module) {
 					var moduleView = new ModuleLoader({module: module});

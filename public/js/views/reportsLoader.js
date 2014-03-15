@@ -9,29 +9,33 @@
 		'views/analysis/reportsSidebar'
 	], function (libs, utils, ReportController, BaseView, ReportsSidebar) {
 
-		var Notification = utils.Notification;
+		var Notification = utils.Notification,
+        Vent = utils.Vent;
 
 		return BaseView.extend({
 			initialize: function (options) {
-                var that = this;
-                
-                BaseView.prototype.initialize.call(that, options);
-                that.render();
-            },
+          var that = this,
+              reportsWorkspace;
+          
+          BaseView.prototype.initialize.call(that, options);
 
-            render: function () {
-                var that = this,
-                	reportsWorkspace,
-                	reportsSidebar;
-                        
-                Notification.info('Loading');
+          that.listenTo(Vent, 'analysis:sidebarLoaded', function () {
+            reportsWorkspace = new ReportController();
+            reportsWorkspace.render();
+          });
 
-               that.reportsWorkspace = reportsWorkspace = new ReportController();
-               reportsWorkspace.render();
+          that.render();
+      },
 
-               reportsSidebar = new ReportsSidebar();
-               reportsSidebar.render();
-            }
+      render: function () {
+          var that = this,
+          	reportsSidebar;
+                  
+          Notification.info('Loading');
+
+         reportsSidebar = new ReportsSidebar();
+         reportsSidebar.render();
+      }
 		});
 
 	});
