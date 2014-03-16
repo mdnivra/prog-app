@@ -9,7 +9,7 @@ Route::filter('auth', function()
   
 Route::group(array('before' => 'auth'), function()
 {
-    Route::get('/home', 'ProgknowsController@home');
+    Route::get('/home', array('as' => 'home', 'uses' => 'ProgknowsController@home'));
 	Route::resource('social_account', 'Api_SocialAccountController');
 	Route::any('/social_app/search', 'Api_SocialAppController@search'); // route clashing with resource route. So, keeping this route above resource route 
 	Route::resource('social_app', 'Api_SocialAppController');
@@ -22,6 +22,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::any('/twitterusername','TwitterController@checkUsername');
 
 	Route::controller('analysis','ReportsController');
+	Route::get('/analysis', array('as' => 'analysis', 'uses' => 'ReportsController@getIndex'));
 
 });
 
@@ -32,6 +33,6 @@ Route::get('/twitter_insights', 'Job_TwitterJobController@TwitterInsights');
 
 
 Route::post('/login','LoginController@postLogin');
-Route::get('/logout','LoginController@getLogout');
+Route::get('/logout', array('as' => 'logout', 'uses' => 'LoginController@getLogout'));
 
 ?>
