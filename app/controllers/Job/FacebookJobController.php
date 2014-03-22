@@ -70,9 +70,10 @@ class Job_FacebookJobController extends BaseController {
 		$period = 'lifetime';
 		
 
-		$this->saveBasicMetrics($facebookPages, 'fan_count,talking_about_count', 'lifetime');
+		$this->saveBasicMetrics($facebookPages, 
+			'fan_count,talking_about_count,pic,name,founded,description,about', 'lifetime');
 		
-		//$this->getMetrics($facebookPages, 'page_engaged_users', 'day');
+	//	$this->getMetrics($facebookPages, 'page_engaged_users', 'day');
 
 		return Response::json(array(
 			        'error' => true,
@@ -148,7 +149,8 @@ class Job_FacebookJobController extends BaseController {
 				'end_date' => $end_date
 			);
 			$socialAccountJob  = new AccountJob();
-			$socialAccountJob->social_account_id = $facebookPages[$key]['id'];
+			$socialAccountJob->account_id = $facebookPages[$key]['id'];
+			$socialAccountJob->table = $facebookPages[$key]['table'];
 			$socialAccountJob->data  = json_encode($insightsData, true);
 			$socialAccountJob->save();
 		}

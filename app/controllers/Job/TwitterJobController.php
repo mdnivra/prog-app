@@ -69,7 +69,7 @@ class Job_TwitterJobController extends BaseController {
 	
 		 	$socialAccountJob = new AccountJob();
 			$socialAccountJob->account_id = $twitterAccount->id;
-			$socialAccountJob->table = $table;
+			$socialAccountJob->table = $twitterAccount->table;
 					
 			$socialAccountJob->data  = $jobData;
 			$socialAccountJob->save();

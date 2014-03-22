@@ -14,12 +14,28 @@ class Job extends Eloquent {
  		return $data;
 
  	}
+
+    /**
+    this will append table attribute to data
+    ***/
+
+   
+
+    public static function getFbTwitterPages($network_type){
+
+        $data = array();
+
+        $data = Helper::appendTable(SocialAccount::where('network_type',$network_type)
+            ->get(), 'social_accounts', $data);
+
+        $data = Helper::appendTable(CompetitiveAnalysisConfig::where('network_type',
+            $network_type)->get(), 'competitive_analysis_config', $data);
+        
+        return $data;
+    }
  	
  	public static function GetFacebokPages(){
- 		$data =SocialAccount::where('network_type','facebook')
- 			->get();
- 		return $data;
-
+        return Job::getFbTwitterPages('facebook');
  	}
 
     public static function updateAccessToken($data){
@@ -29,10 +45,10 @@ class Job extends Eloquent {
     }
 
     public static function getTwitterAccounts(){
-    	$data =SocialAccount::where('network_type','twitter')
- 			->get(array('id', 'object_id', 'username'));
- 		return $data;
-
+          return Job::getFbTwitterPages('twitter');
+   //  	$data =SocialAccount::where('network_type','twitter')
+ 		// 	->get(array('id', 'object_id', 'username'));
+ 		// return $data;
     }
 
     public static function getTwitterCompAccounts(){

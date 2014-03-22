@@ -4,8 +4,19 @@ class Api_CompetitiveAnalysisConfigController extends BaseController {
 
 	public function index()
 	{
-		$var =CompetitiveAnalysisConfig::where('user_id', '=', Auth::user()->id)->get();
-		return $var;
+		$data =CompetitiveAnalysisConfig::where('user_id', '=', Auth::user()->id)
+			->where('network_type', '=', Input::get('network_type'))->get();
+        foreach ($data as $key => $value) {
+            $accountjobdata = AccountJob::where('account_id', '=', $value->id)
+        		->where('table', '=', 'competitive_analysis_config')
+        		->orderBy('id', 'desc')
+        		->first();
+
+        	$data[$key]['data'] = $accountjobdata? $accountjobdata->data : array() ;	
+        }
+
+		return $data;
+
 	}
 
 	/**
