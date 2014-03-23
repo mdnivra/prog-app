@@ -28,8 +28,8 @@ Route::group(array('before' => 'auth'), function()
 
 
 Route::get('/extend_tokens', 'Job_FacebookJobController@ExtendAccessToken');
-Route::get('/facebook_insights', 'Job_FacebookJobController@FacebookPageInsights');
-Route::get('/twitter_insights', 'Job_TwitterJobController@TwitterInsights');
+Route::get('/facebook_insight_job', 'Job_FacebookJobController@FacebookPageInsights');
+Route::get('/twitter_insight_job', 'Job_TwitterJobController@TwitterInsights');
 
 
 Route::post('/login','LoginController@postLogin');
