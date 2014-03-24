@@ -1,9 +1,6 @@
 <div class="form-group pos-relative row-<%=i%>" data-id="<%= id %>">
 	<input type="text" name="competitor_<%=i%>" id="competitor_<%=i%>" value="<%= competitor %>" class="form-control <%= cssClasses['COLUMN-12'] %>">
 	<span class="form-control-feedback pos-absolute">
-		<i data-action="addRow" class="glyphicon glyphicon-plus prog-tooltip" data-toggle="tooltip" data-placement="bottom" data-original-title="<%=messages.clickToAdd %>"></i>&nbsp;
-		<% if(i > 1) { %>
-			<i data-action="removeRow" class="glyphicon glyphicon-remove prog-tooltip" data-toggle="tooltip" data-placement="bottom" data-original-title="<%=messages.clickToRemove %>"></i>
-		<% } %>
+		<i data-action="addRow" class="glyphicon glyphicon-plus prog-tooltip" data-toggle="tooltip" data-placement="bottom" data-original-title="<%=messages.clickToAdd %>"></i>
 	</span>
 </div>

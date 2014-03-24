@@ -7,8 +7,9 @@
 		'views/baseView',
 		'views/analysis/moduleLoader',
 		'factory/analysis/reports',
+		'text!templates/analysis/reportWorkspace.html',
 		'constants'
-	], function (libs, utils, BaseView, ModuleLoader, reportsFactory, constants) {
+	], function (libs, utils, BaseView, ModuleLoader, reportsFactory, reportWorkspaceTemplate, constants) {
 
 		var _ = libs.underscore,
 			$ = libs.jquery,
@@ -22,6 +23,23 @@
 			})[0] || {}).modules;
 		},
 
+		renderModules = function (reportType) {
+			var that = this,
+				jModules = document.createDocumentFragment(),
+				modules;
+
+			modules = getModules.call(that, reportType);
+
+			_.forEach(modules , function (module) {
+				var moduleView = new ModuleLoader({module: module});
+				that.moduleViews.push(moduleView);
+				
+				jModules.appendChild(moduleView.render().el);
+			});
+
+			that.$('.report-modules').html(jModules);
+		},	
+
 		showReport = function (reportType) {
 			var that = this;
 
@@ -31,6 +49,8 @@
 		ReportController = BaseView.extend({
 
 			el: $(constants.contentBodySelector),
+
+			template: _.template(reportWorkspaceTemplate),
 
 			initialize: function(options) {
 				var that = this;
@@ -43,22 +63,15 @@
 			render: function (reportType) {
 				var that = this,
 					jEl = that.$el,
-					modules, jModules = document.createDocumentFragment();
+					modules, jModules;
 
 				if(!reportType) {
 					reportType = (reportsFactory[0] || {}).key;
 				}
 				
-				modules = getModules.call(that, reportType);
+				that.$el.html(that.template());
 
-				_.forEach(modules , function (module) {
-					var moduleView = new ModuleLoader({module: module});
-					that.moduleViews.push(moduleView);
-					
-					jModules.appendChild(moduleView.render().el);
-				});
-				
-				that.$el.html(jModules);
+				renderModules.call(that, reportType);
 
 				Notification.hide();
 

@@ -7,7 +7,7 @@
 		'views/baseView',
 		'factory/analysis/reports',
         'routers/reportsRouter',
-		'text!templates/analysis/reportsSidebarTemplate.html',
+		'text!templates/analysis/reportsSidebar.html',
 		'constants'
 	], function (libs, utils, BaseView, reportsFactory, ReportsRouter, reportsSidebarTemplate, constants) {
 

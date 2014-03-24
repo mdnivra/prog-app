@@ -10,7 +10,7 @@
 
 			return Backbone.Collection.extend({
 				url: 'competitor',
-				
+				baseUrl: 'competitor',
 				model: CompetitorModel
 			});
 	});

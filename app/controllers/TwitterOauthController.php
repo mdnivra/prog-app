@@ -54,7 +54,7 @@ class TwitterOauthController extends Controller {
 		    						"state"=>$content->location,
 		    						"country"=>'',
 		    						"object_id" => $content->id,
-		    						"network_type"=>"twitter",
+		    						"network_type"=>"Twitter",
 		    						"access_token"=>$access_token['oauth_token'],
 		    						"access_token_secret"=>$access_token['oauth_token_secret']
 							)

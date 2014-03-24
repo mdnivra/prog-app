@@ -26,9 +26,6 @@
                 case 'addRow': 
                     addRow.call(that);
                     break;
-                case 'removeRow':
-                    removeRow.call(that);
-                    break;
                 case 'save':
                     save.call(that);
                     break;
@@ -55,23 +52,22 @@
 
             for(i = 0; i < jInput.length ; i++) {
                 inputValue = $(jInput[i]).val();
-                if(i < cLength) { 
-                    that.collection.models[i].set({object_id: inputValue });
-                    toUpdateCollection.add(that.collection.models[i]);
-                } else {
+                
+                if(inputValue) {
                     competitorModel = new CompetitorModel();
                     competitorModel.set({
                         network_type: that.network,
                         object_id: inputValue 
                     });
-                    //that.collection.add(competitorModel);
+                    that.fullCollection.add(competitorModel);
                     toAddCollection.add(competitorModel);
                 }
+             
             }
 
             that.jSaveBtn.button('loading');
-
-            $.when(addCompetitors.call(that, toAddCollection), updateCompetitors.call(that, toUpdateCollection)).done(
+            
+            $.when(addCompetitors.call(that, toAddCollection)).done(
                 function () {
                     Notification.success(messages.saved);
                     closeView.call(that);
@@ -111,7 +107,7 @@
                 deferred.resolve();
             } else {
                 Backbone.sync("update", collection, {
-                    url: collection.url + '/1',
+                    url: collection.baseUrl + '/1',
                     success: function (response) {
                         deferred.resolve();
                     },
@@ -145,48 +141,6 @@
             ModalView.prototype.enableTooltip.call(that);
         },
 
-        removeRow = function () {
-            var that = this,
-                id, competitorModel,
-                jRow = that.jForm.find('.row-'+ that.rowCount);
-
-            id = jRow.attr('data-id');
-            if(id) {
-                competitorModel = that.collection.get(id);
-                competitorModel.destroy({
-                    url: competitorModel.url + '/' + id,
-                    success: function () {
-                        Notification.success(messages.removedSuccessfully);
-                        jRow.remove();
-                        that.rowCount --;
-                    }, 
-                    error: function () {
-                        Notification.error(messages.serverError);
-                    }
-                });
-            } else {
-                jRow.remove();
-                that.rowCount --;    
-            } 
-            
-        },
-
-        fetchCompetitors = function () {
-            var that = this,
-                deferred = $.Deferred();
-
-            that.collection.fetch({
-                success: function () {
-                    deferred.resolve();
-                }, 
-                error: function () {
-                    deferred.reject();
-                }
-            });
-
-            return deferred.promise();
-        },
-
         postRender = function () {
         	var that = this,
                 jFrag = $(document.createDocumentFragment());
@@ -195,14 +149,7 @@
             that.jSaveBtn = that.$el.find('.save-btn');
             that.rowCount = 0;
 
-            if(that.collection.length === 0) {
-                that.jForm.append(newRowHtm.call(that));
-            } else {
-                that.collection.each(function (competitor) {
-                    jFrag.append(newRowHtm.call(that, competitor.get('object_id'), competitor.get('id')));
-                });
-                that.jForm.append(jFrag);
-            }
+            that.jForm.append(newRowHtm.call(that));
         },
 
         manageCompetitorsView = ModalView.extend({

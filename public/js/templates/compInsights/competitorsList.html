@@ -1,13 +1,21 @@
 <div class="content-header">
-	<!--<button class="btn btn-primary" data-action="manage">Manage Competitors</button>-->
-	<div class="dropdown btn btn-primary">
+	<div class="dropdown btn btn-primary pull-right">
 	    <a class="dropdown-toggle" id="drop4" role="button" data-toggle="dropdown" href="#">Manage Competitors <b class="caret"></b></a>
 	    <ul id="menu1" class="dropdown-menu" role="menu" aria-labelledby="drop4">
 	    	<li role="presentation" data-action="manageFacebookCompetitors"><a role="menuitem" tabindex="-1" href="javascript:void(0)">Facebook</a></li>
 	    	<li role="presentation" data-action="manageTwitterCompetitors"><a role="menuitem" tabindex="-1" href="javascript:void(0)">Twitter</a></li>
 	    </ul>
-	</div>    
+	</div>
+
+	<div class="<%= cssClasses['COLUMN-3'] %> pull-right">
+		<form class="form-group">
+			<div class="input-group">
+				<input class="form-control" id="appendedInput" type="text" placeholder="Search">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+			</div>
+		</form>
+	</div>
 </div>
-<div class="content-body">
-	<div class="span12 no-apps"><div class="alert"><%= messages.noData %></div></div>
+<div class="content-body clearboth pos-relative">
+	<div class="<%= cssClasses['COLUMN-12'] %> no-competitors"><div class="alert alert-info"><%= messages.noData %></div></div>
 </div>

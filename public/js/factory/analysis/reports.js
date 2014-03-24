@@ -22,12 +22,15 @@
 			},
 
 			{
-				title: 'Temp Analysis',
-				key: 'TEMP_ANALYSIS',
+				title: 'Twitter Analysis',
+				key: 'TWITTER_ANALYSIS',
+				filters: [
+					{type: 'ACCOUNTS', value: 'Twitter'}
+				],
 				modules : [
 					{
 						key: 	'FACEBOOK_COMPETITOR_ANALYSIS',
-						title: 	'Facebook Competitors',
+						title: 	'TWITTER_ANALYSIS',
 						width: 	'HALF_WIDTH'
 					}
 				]
