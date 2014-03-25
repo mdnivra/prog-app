@@ -25,7 +25,7 @@
                             <input type="password" name="password" class="form-control col-md-12 col-lg-12" placeholder="Password">
                         </div>
                         @if(Session::has('message'))
-                            <p class="alert alert-error">{{ Session::get('message') }}</p>
+                            <p class="alert alert-danger">{{ Session::get('message') }}</p>
                         @endif
                         <button class="btn btn-primary" type="submit">Login</button>
                     {{ Form::close() }}

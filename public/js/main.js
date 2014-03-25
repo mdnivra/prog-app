@@ -6,6 +6,7 @@ require.config({
 		bootstrap : '../bootstrap/js/bootstrap',
 		vent: 'utils/vent',
 		highcharts: 'libs/highcharts',
+		select2: 'libs/select2.min',
 		text : 'libs/require/text'
 	},
 	shim : {
