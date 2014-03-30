@@ -16,6 +16,14 @@ class Api_ReportController extends BaseController {
 		}
 	}
 
+	public function bootstrap() {
+		$data = array(
+			"reports" => json_decode(file_get_contents(public_path().'/configJson/reports.json'), true)
+		);
+
+		return Response::json($data);
+	}
+
 	private function getModuleData($widgetType){
 		switch ($widgetType) {
 		    case "FACEBOOK_COMPETITOR_ANALYSIS":

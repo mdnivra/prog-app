@@ -6,11 +6,11 @@
 		'utils',
 		'views/baseView',
 		'views/analysis/moduleLoader',
-		'factory/analysis/reports',
 		'text!templates/analysis/reportWorkspace.html',
 		'text!templates/analysis/filters.html',
-		'constants'
-	], function (libs, utils, BaseView, ModuleLoader, reportsFactory, reportWorkspaceTemplate, filtersTemplate, constants) {
+		'constants',
+		'messages/analysis'
+	], function (libs, utils, BaseView, ModuleLoader, reportWorkspaceTemplate, filtersTemplate, constants, messages) {
 
 		var _ = libs.underscore,
 			$ = libs.jquery,
@@ -22,7 +22,7 @@
 		setReportconfig = function (reportType) {
 			var that = this;
 
-			that.reportConfig = (_.filter(reportsFactory, function (report) {
+			that.reportConfig = (_.filter(that.reportsFactory, function (report) {
 				return report.key === reportType;
 			})[0] || {});
 		},
@@ -41,7 +41,7 @@
 				jModules.appendChild(moduleView.render().el);
 			});
 
-			that.$('.report-modules').html(jModules);
+			that.reportModules.html(jModules);
 		},	
 
 		renderFilters = function () {
@@ -49,7 +49,7 @@
 				filters = that.reportConfig.filters || {};
 
 			if(filters) {
-				that.$('.report-filters').html(that.filtersTemplate({
+				that.reportFilters.html(that.filtersTemplate({
 					filters: filters,
 					cssClasses: CssClasses,
 				}));
@@ -65,11 +65,27 @@
 		showReport = function (reportType) {
 			var that = this;
 
-			that.render(reportType);
+			Notification.info(messages.loadingReport);
+
+			that.reportFilters.empty();
+			that.reportModules.empty();
+
+			if(!reportType) {
+				reportType = (that.reportsFactory[0] || {}).key;
+			}
+
+			setReportconfig.call(that, reportType);
+
+			renderFilters.call(that, reportType);
+			renderModules.call(that, reportType);
+
+			postReportLoad.call(that);
 		},
 
-		postRender = function () {
+		postReportLoad = function () {
 			var that = this;
+
+			Notification.hide();
 
 			that.$('.prog-select').select2();
 
@@ -78,6 +94,15 @@
 			that.jAccountsFilter.on('change', function () {
 				applyFilters.call(that);
 			});
+		},
+
+		postRender = function () {
+			var that = this;
+
+			that.reportFilters = that.$('.report-filters');
+			that.reportModules = that.$('.report-modules');
+
+			Vent.trigger('analysis:reportSkeletonLoaded');	
 		};
  
 		ReportController = BaseView.extend({
@@ -99,22 +124,15 @@
 			render: function (reportType) {
 				var that = this,
 					jEl = that.$el,
+					reportsFactory = that.bootstrap.reports,
 					modules, jModules;
 
-				if(!reportType) {
-					reportType = (reportsFactory[0] || {}).key;
-				}
-
-				setReportconfig.call(that, reportType);
 				
 				that.$el.html(that.template());
 
-				renderFilters.call(that, reportType);
-				renderModules.call(that, reportType);
+				that.reportsFactory = reportsFactory;
 
 				postRender.call(that);
-
-				Notification.hide();
 
 				return that;	
 			}

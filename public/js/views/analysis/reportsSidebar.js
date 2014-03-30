@@ -5,11 +5,9 @@
 		'libs',
 		'utils',
 		'views/baseView',
-		'factory/analysis/reports',
-        'routers/reportsRouter',
 		'text!templates/analysis/reportsSidebar.html',
 		'constants'
-	], function (libs, utils, BaseView, reportsFactory, ReportsRouter, reportsSidebarTemplate, constants) {
+	], function (libs, utils, BaseView, reportsSidebarTemplate, constants) {
 
 		var Backbone = libs.backbone,
             _ = libs.underscore,
@@ -17,15 +15,6 @@
             Notification = utils.Notification,
             Vent = utils.Vent,
             reportsSidebarView,
-
-        initRouter = function () {
-            var that = this;
-            
-            that.listenTo(Vent, 'analysis:makeLinkActive', makeLinkActive);
-
-            new ReportsRouter;
-            Backbone.history.start();
-        },
 
         makeLinkActive = function (reportType) {
             var that = this,
@@ -50,20 +39,21 @@
         		var that = this;
 
         		BaseView.prototype.initialize.call(that);
-                
+
+                that.listenTo(Vent, 'analysis:makeLinkActive', makeLinkActive);
         	},
 
         	render: function () {
         		var that = this;
 
         		that.$el.html(that.template({
-        			reports: reportsFactory
+        			reports: that.options.reportsFactory
         		}));
 
                 that.jSidebarItems = that.$('.sidebar-list-item');
 
                 Vent.trigger('analysis:sidebarLoaded');
-                initRouter.call(that);
+               	
         		return that;
         	}
         });

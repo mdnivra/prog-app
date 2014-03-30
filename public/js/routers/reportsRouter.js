@@ -15,7 +15,8 @@
 		ReportsRouter = BaseRouter.extend({
 
 			routes: {
-				':id': 'showReport'
+				'': 	'showReport',
+				':id': 	'showReport'
 			},
 
 			showReport: function(id) {

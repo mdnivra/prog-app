@@ -17,6 +17,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::resource('social_user', 'Api_SocialUserController');
 	Route::resource('social_user', 'Api_SocialUserController');
 	Route::get('/reports', 'Api_ReportController@index');
+	Route::get('/report_bootstrap', 'Api_ReportController@bootstrap');
 	Route::get('/twitteroauth','TwitterOauthController@redirect');
 	Route::any('/twittercallback','TwitterOauthController@callback');
 	Route::any('/twitterusername','TwitterController@checkUsername');

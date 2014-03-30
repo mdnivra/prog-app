@@ -8,7 +8,7 @@
 		var Backbone = libs.backbone;
 
 		return Backbone.Model.extend({
-			url: 'competitor'
+			url: 'report_bootstrap'
 		});
 	});
 })();
