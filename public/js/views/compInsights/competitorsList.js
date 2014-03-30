@@ -136,7 +136,8 @@
 
         	render: function () {
 				var that = this,
-					jProfiles = document.createDocumentFragment();
+					jProfiles = document.createDocumentFragment(),
+                    jContentBody;
 
 				Notification.hide();
 
@@ -145,8 +146,8 @@
 					cssClasses: CssClasses
 				}));
 
-				that.jContentBody = that.$el.find('.content-body');
-				that.jMsgBlock = that.jContentBody.find('.no-competitors');
+				jContentBody = that.jContentBody = that.$el.find('.content-body');
+				that.jMsgBlock = jContentBody.find('.no-competitors');
 
 				if(that.collection.length > 0) {
 					that.jContentBody.empty();
@@ -155,7 +156,7 @@
 						jProfiles.appendChild(renderProfile.call(that, profile));
 					});
 
-					that.jContentBody.append(jProfiles);
+					jContentBody.append(jProfiles);
 				}
 				return that;
 			},

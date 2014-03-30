@@ -36,6 +36,13 @@
 				addAppView.render();
 			},
 
+			renderApp = function (app) {
+				var that = this,
+					appView = new SocialAppView({model: app});
+					
+				return appView.render().el;
+			},
+
 			accountListView = BaseView.extend({
 				className: 'content-wrapper-inner ' + CssClasses['COLUMN-12'],
 				
@@ -53,28 +60,35 @@
 				},
 
 				render: function () {
-					var that = this;
+					var that = this,
+						jApps = document.createDocumentFragment(),
+						jContentBody;
 
 					that.$el.html(that.template({
-						apps: that.collection,
-						messages: messages,
+						messages: 	messages,
 						cssClasses: CssClasses
 					}));
 
-					that.jContentBody = that.$el.find('.content-body');
-					that.jMsgBlock = that.jContentBody.find('.no-apps');
+					jContentBody = that.jContentBody = that.$el.find('.content-body');
+					that.jMsgBlock = jContentBody.find('.no-apps');
+
 					if(that.collection.length > 0) {
-						that.jContentBody.empty();
-						that.collection.each(that.addOne, that);
+						jContentBody.empty();
+
+						that.collection.each(function (app) {
+							jApps.appendChild(renderApp.call(that, app));
+						});
+
+						jContentBody.append(jApps);
 					}
+
 					return that;
 				},
 
 				addOne: function(app) {
-					var that = this,
-						appView = new SocialAppView({model: app});
-					that.jMsgBlock.remove();
-					that.jContentBody.append(appView.render().el);
+					var that = this;
+
+					that.jContentBody.append(renderApp.call(that, app));
 				} 
 			});
 

@@ -29,6 +29,13 @@
 				}
 			},
 
+			renderAccount = function (account) {
+				var that = this,
+					accountView = new SingleAccountView({model: account});
+					
+				return accountView.render().el;
+			},
+
 			openAddView = function () {
 				var that = this,
 					addProfileView = new AddSocialProfileView({collection: that.collection});
@@ -53,28 +60,35 @@
 				},
 
 				render: function () {
-					var that = this;
+					var that = this,
+						jAccounts = document.createDocumentFragment(),
+						jContentBody;
 
 					that.$el.html(that.template({
-						accounts: that.collection,
 						messages: accountMessages,
 						cssClasses: CssClasses
 					}));
 
-					that.jContentBody = that.$el.find('.content-body');
-					that.jMsgBlock = that.jContentBody.find('.no-accounts');
+					jContentBody = that.jContentBody = that.$el.find('.content-body');
+					that.jMsgBlock = jContentBody.find('.no-accounts');
+					
 					if(that.collection.length > 0) {
-						that.jContentBody.empty();
-						that.collection.each(that.addOne, that);
+						jContentBody.empty();
+
+						that.collection.each(function (account) {
+							jAccounts.appendChild(renderAccount.call(that, account));
+						});
+
+						jContentBody.append(jAccounts);
 					}
+
 					return that;
 				},
 
 				addOne: function(account) {
-					var that = this,
-						accountView = new SingleAccountView({model: account});
-					that.jMsgBlock.remove();
-					that.jContentBody.append(accountView.render().el);
+					var that = this;
+
+					that.jContentBody.append(renderAccount.call(that, account));
 				} 
 			});
 
