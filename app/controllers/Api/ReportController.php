@@ -16,9 +16,14 @@ class Api_ReportController extends BaseController {
 		}
 	}
 
-	public function bootstrap() {
+	public function bootstrap() { 
+		
+		$socialAccounts = SocialAccount::where('user_id', '=', Auth::user()->id)->get();
+		$socialAccounts = SocialAccount::groupByKey($socialAccounts, 'network_type', array('object_id', 'title'));
+
 		$data = array(
-			"reports" => json_decode(file_get_contents(public_path().'/configJson/reports.json'), true)
+			"reports" => json_decode(file_get_contents(public_path().'/configJson/reports.json'), true),
+			"accounts" => $socialAccounts
 		);
 
 		return Response::json($data);

@@ -74,6 +74,16 @@ class SocialAccount extends Eloquent {
 			}
 
     }
+
+    public static function groupByKey($data, $key, $list) {
+    	$accounts = array();
+
+    	foreach ($data as $value) {
+    		$accounts[$value->$key][][$value->$list[0]] = $value->$list[1]; 	
+    	}
+
+    	return $accounts;
+    }
    
  
 }
