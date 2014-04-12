@@ -46,12 +46,14 @@
 
 		renderFilters = function () {
 			var that = this,
+				bootstrap = that.bootstrap,
 				filters = that.reportConfig.filters || {};
 
 			if(filters) {
 				that.reportFilters.html(that.filtersTemplate({
 					filters: filters,
 					cssClasses: CssClasses,
+					accounts: bootstrap.accounts
 				}));
 			}
 		},
@@ -83,11 +85,12 @@
 		},
 
 		postReportLoad = function () {
-			var that = this;
+			var that = this,
+				jSelect = that.$('.prog-select');
 
 			Notification.hide();
 
-			that.$('.prog-select').select2();
+			jSelect && jSelect.select2({dropdownAutoWidth: 'true'});
 
 			that.jAccountsFilter = that.$('.flt-accounts');
 

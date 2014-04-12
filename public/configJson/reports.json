@@ -2,6 +2,9 @@
 {
 	"title": "Competitor Analysis",
 	"key": "COMPETITOR_ANALYSIS",
+	"filters": [
+		{"type": "ACCOUNTS", "value": "Facebook", "title": "Accounts"}
+	],
 	"modules" : [
 		{
 			"key": 	"FACEBOOK_COMPETITOR_ANALYSIS",
@@ -21,7 +24,7 @@
 	"title": "Twitter Analysis",
 	"key": "TWITTER_ANALYSIS",
 	"filters": [
-		{"type": "ACCOUNTS", "value": "Twitter"}
+		{"type": "ACCOUNTS", "value": "Twitter", "title": "Accounts"}
 	],
 	"modules" : [
 		{

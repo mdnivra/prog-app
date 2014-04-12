@@ -4,15 +4,21 @@
 			<% _.forEach(filters, function (filter) { %>
 				<% var filterType = filter.type; %>
 
-				<% switch(filterType) {
-					case 'ACCOUNTS': %>
-						<select class="prog-select flt-accounts">
-							<option value="">-Select-</option>
-							<option value="1">A</option>
-						</select>
-						<% break;
-				} %>
-
+				<div class="<%= cssClasses['COLUMN-3'] %> form-group">
+					<label ><%= filter.title %></label>
+					<span class="rm-flt-input">
+					<% switch(filterType) {
+						case 'ACCOUNTS': %>
+							<select class="prog-select flt-accounts">
+								<option value="">-Select-</option>
+								<% _.forEach(accounts[filter.value], function (value) { %>
+									<option value="<%= value.object_id %>"><%= value.title %></option>
+								<% }) %>
+							</select>
+							<% break;
+					} %>
+					</span>
+				</div>
 			<% }) %>
 		</div>
 	</div>

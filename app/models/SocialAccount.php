@@ -79,7 +79,7 @@ class SocialAccount extends Eloquent {
     	$accounts = array();
 
     	foreach ($data as $value) {
-    		$accounts[$value->$key][][$value->$list[0]] = $value->$list[1]; 	
+    		$accounts[$value->$key][] = array_only($value->toArray(), $list);	
     	}
 
     	return $accounts;
